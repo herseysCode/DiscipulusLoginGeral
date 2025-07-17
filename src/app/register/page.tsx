@@ -50,12 +50,10 @@ export default function CadastroPage() {
       navegar.push('/catalog');
     } catch (erro: any) {
       console.error('Erro ao cadastrar:', erro);
-      alert(erro.message || 'Erro inesperado. Veja o console.');
-
+      alert(erro.message || 'Erro ao cadastrar usuário');
     } finally {
       setCarregando(false);
     }
-
   };
 
   const lidarComMudancaInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
