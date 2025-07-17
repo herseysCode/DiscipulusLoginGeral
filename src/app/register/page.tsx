@@ -4,12 +4,10 @@ import { Eye, EyeOff, Mail, Lock, User, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { cadastrarUsuario } from '@/service/api';
+import { useUsuario } from '../context/UsuarioContext';
 
-interface PropriedadesCadastrar {
-  aoFazerLogin: (usuario: any) => void;
-}
-
-export default function CadastroPage({ aoFazerLogin }: PropriedadesCadastrar) {
+export default function CadastroPage() {
+  const { lidarComLogin } = useUsuario();
   const [dadosFormulario, setDadosFormulario] = useState({
     nome: '',
     email: '',
@@ -40,7 +38,15 @@ export default function CadastroPage({ aoFazerLogin }: PropriedadesCadastrar) {
         tipoUsuario: dadosFormulario.papel === 'professor' ? 2 : 1,
       });
 
-      // aoFazerLogin(usuario); // exemplo: salvar no contexto ou localStorage
+      // Criar objeto de usuário para o contexto
+      const usuarioContexto = {
+        id: usuario.id || '1', // Use o ID retornado pela API ou um padrão
+        nome: dadosFormulario.nome,
+        email: dadosFormulario.email,
+        papel: dadosFormulario.papel as 'estudante' | 'professor'
+      };
+      
+      lidarComLogin(usuarioContexto);
       navegar.push('/catalog');
     } catch (erro: any) {
       console.error('Erro ao cadastrar:', erro);
@@ -50,17 +56,6 @@ export default function CadastroPage({ aoFazerLogin }: PropriedadesCadastrar) {
       setCarregando(false);
     }
 
-    // setTimeout(() => {
-    //   const usuario = {
-    //     id: '1',
-    //     nome: dadosFormulario.nome,
-    //     email: dadosFormulario.email,
-    //     papel: dadosFormulario.papel
-    //   };
-    //   aoFazerLogin(usuario);
-    //   setCarregando(false);
-    //   navegar.push('/catalog');
-    // }, 1000);
   };
 
   const lidarComMudancaInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

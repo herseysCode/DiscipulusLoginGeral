@@ -19,17 +19,26 @@ export default function LoginPage() {
     e.preventDefault();
     setCarregando(true);
 
-    setTimeout(() => {
-      const usuario: Usuario = {
-        id: "1",
-        nome: "João Silva",
-        email: email,
-        papel: "estudante",
-      };
-      lidarComLogin(usuario);
+    try {
+      // Aqui você faria a chamada para sua API de login
+      // const resposta = await fazerLogin({ email, senha });
+      
+      // Por enquanto, simulando o login
+      setTimeout(() => {
+        const usuario: Usuario = {
+          id: "1",
+          nome: "João Silva",
+          email: email,
+          papel: "estudante",
+        };
+        lidarComLogin(usuario);
+        setCarregando(false);
+        navegar.push("/catalog");
+      }, 1000);
+    } catch (erro) {
+      console.error('Erro ao fazer login:', erro);
       setCarregando(false);
-      navegar.push("/catalog");
-    }, 1000);
+    }
   };
 
   return (
