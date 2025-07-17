@@ -27,6 +27,6 @@ export default function CabecalhoClient() {
       </header>
     );
   }
-}
 
   return <Cabecalho usuario={usuario} aoFazerLogout={lidarComLogout} />;
+}
